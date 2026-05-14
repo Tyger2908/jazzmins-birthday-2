@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+
+<title>Happy Birthday Jazzmin 🌸</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Caveat+Brush&family=Caveat:wght@600;700&display=swap" rel="stylesheet"/>
+
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+<style>
+
+*, *::before, *::after{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+:root{
+  --peach:#FDEBD0;
+  --peach-mid:#f9d5b8;
+  --peach-dark:#f0bc90;
+  --brown:#8b4513;
+  --brown-light:#c0722a;
+  --caption:#7a3510;
+  --card-bg:#fffef8;
+  --shadow1:#e8c9a0;
+  --shadow2:#d4a870;
+}
+
+html{
+  scroll-behavior:smooth;
+}
+
+body{
+  background-color:var(--peach);
+  background-image:
+    radial-gradient(circle at 20% 20%, #fff4e7 0%, transparent 35%),
+    radial-gradient(circle at 80% 80%, #f8caa2 0%, transparent 35%);
+  font-family:'Caveat', cursive;
+  overflow-x:hidden;
+  padding-bottom:4rem;
+  position:relative;
+  animation:bgmove 15s ease infinite alternate;
+}
+
+@keyframes bgmove{
+  from{
+    background-position:0% 0%;
+  }
+  to{
+    background-position:100% 100%;
+  }
+}
+
+/* FLOATING BLUR CIRCLES */
+
+.blur{
+  position:fixed;
+  border-radius:50%;
+  filter:blur(70px);
+  opacity:0.4;
+  z-index:-1;
+}
+
+.blur1{
+  width:250px;
+  height:250px;
+  background:#ffd6ae;
+  top:-50px;
+  left:-50px;
+}
+
+.blur2{
+  width:300px;
+  height:300px;
+  background:#ffc4d6;
+  bottom:-100px;
+  right:-100px;
+}
+
+/* FAIRY LIGHTS */
+
+.fairy-lights{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  display:flex;
+  justify-content:space-around;
+  padding:10px 0;
+  z-index:1000;
+  pointer-events:none;
+}
+
+.fairy-lights span{
+  width:12px;
+  height:12px;
+  border-radius:50%;
+  background:#ffd27f;
+  box-shadow:0 0 15px #ffd27f;
+  animation:twinkle 1.5s infinite alternate;
+}
+
+.fairy-lights span:nth-child(even){
+  animation-delay:0.7s;
+}
+
+@keyframes twinkle{
+  from{
+    opacity:0.4;
+    transform:scale(1);
+  }
+  to{
+    opacity:1;
+    transform:scale(1.4);
+  }
+}
+
+/* HEADER */
+
+header{
+  text-align:center;
+  padding:4rem 1rem 2rem;
+  position:relative;
+}
+
+header h1{
+  font-family:'Caveat Brush', cursive;
+  font-size:3.2rem;
+  color:var(--brown);
+  line-height:1.1;
+  text-shadow:4px 4px 0 #f6c79c;
+  animation:float 3s ease-in-out infinite;
+}
+
+.subtitle{
+  font-size:1.5rem;
+  font-weight:700;
+  color:var(--brown-light);
+  margin-top:0.6rem;
+}
+
+.header-flowers{
+  font-size:1.8rem;
+  margin-top:1rem;
+  animation:pulse 2s infinite;
+}
+
+@keyframes float{
+  0%,100%{
+    transform:translateY(0px);
+  }
+  50%{
+    transform:translateY(-8px);
+  }
+}
+
+@keyframes pulse{
+  0%,100%{
+    transform:scale(1);
+  }
+  50%{
+    transform:scale(1.1);
+  }
+}
+
+/* TYPEWRITER */
+
+.typewriter{
+  text-align:center;
+  font-size:1.4rem;
+  color:var(--brown);
+  margin:1rem auto 2rem;
+  width:fit-content;
+  overflow:hidden;
+  white-space:nowrap;
+  border-right:3px solid var(--brown);
+  animation:
+    typing 5s steps(40,end),
+    blink .8s infinite;
+}
+
+@keyframes typing{
+  from{
+    width:0;
+  }
+  to{
+    width:100%;
+  }
+}
+
+@keyframes blink{
+  50%{
+    border-color:transparent;
+  }
+}
+
+/* FEED */
+
+.feed{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:1rem;
+  padding:0 1rem;
+}
+
+/* POLAROID */
+
+.polaroid-wrap{
+  width:100%;
+  max-width:350px;
+  perspective:1000px;
+}
+
+.polaroid{
+  width:100%;
+  position:relative;
+  background:var(--card-bg);
+  padding:12px 12px 52px;
+  border:1px solid #eedfc0;
+  box-shadow:
+    4px 4px 0 var(--shadow1),
+    8px 8px 0 var(--shadow2);
+  transform-style:preserve-3d;
+  transition:all 0.8s ease;
+  cursor:pointer;
+}
+
+.polaroid:hover{
+  transform:rotateY(180deg) scale(1.03);
+}
+
+.front,
+.back{
+  backface-visibility:hidden;
+}
+
+.back{
+  position:absolute;
+  inset:0;
+  background:#fff6ef;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:2rem;
+  transform:rotateY(180deg);
+  font-size:1.5rem;
+  color:var(--brown);
+  font-weight:bold;
+}
+
+.tape{
+  position:absolute;
+  top:-10px;
+  left:50%;
+  transform:translateX(-50%);
+  width:55px;
+  height:22px;
+  background:rgba(255,224,158,0.7);
+  border:1px solid rgba(210,175,100,0.45);
+}
+
+.photo-area{
+  width:100%;
+  aspect-ratio:1/1;
+  background:linear-gradient(145deg,#f5e8d0,#ecdcc0);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
+  border:1px solid #e0d0b0;
+}
+
+.photo-placeholder{
+  text-align:center;
+  color:#b08a60;
+}
+
+.photo-placeholder span{
+  font-size:3rem;
+}
+
+.photo-placeholder p{
+  font-size:1rem;
+  font-weight:700;
+}
+
+.caption{
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:0;
+  height:52px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.caption span{
+  font-size:1.3rem;
+  font-weight:700;
+  color:var(--caption);
+}
+
+/* FLOWER DIVIDER */
+
+.flower-divider{
+  font-size:1.4rem;
+  animation:bounce 3s infinite;
+}
+
+@keyframes bounce{
+  0%,100%{
+    transform:translateY(0px);
+  }
+  50%{
+    transform:translateY(-4px);
+  }
+}
+
+/* BUTTON */
+
+.surprise-btn{
+  display:block;
+  margin:2rem auto;
+  border:none;
+  background:#ffb27d;
+  color:white;
+  font-size:1.5rem;
+  padding:1rem 2rem;
+  border-radius:999px;
+  cursor:pointer;
+  box-shadow:0 6px 20px rgba(0,0,0,0.15);
+  transition:0.3s;
+  font-family:'Caveat Brush', cursive;
+}
+
+.surprise-btn:hover{
+  transform:scale(1.08);
+}
+
+/* MESSAGE POPUP */
+
+.popup{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.5);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:9999;
+}
+
+.popup-content{
+  background:white;
+  padding:2rem;
+  width:90%;
+  max-width:350px;
+  border-radius:24px;
+  text-align:center;
+  font-size:1.6rem;
+  color:var(--brown);
+  animation:popup 0.4s ease;
+}
+
+@keyframes popup{
+  from{
+    transform:scale(0.5);
+    opacity:0;
+  }
+  to{
+    transform:scale(1);
+    opacity:1;
+  }
+}
+
+/* FOOTER */
+
+footer{
+  text-align:center;
+  margin-top:3rem;
+}
+
+footer p{
+  font-family:'Caveat Brush', cursive;
+  font-size:2rem;
+  color:var(--brown);
+  text-shadow:2px 2px 0 #f5c89a;
+}
+
+.footer-flowers{
+  font-size:1.6rem;
+  margin-top:0.6rem;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="blur blur1"></div>
+<div class="blur blur2"></div>
+
+<div class="fairy-lights">
+  <span></span><span></span><span></span><span></span>
+  <span></span><span></span><span></span><span></span>
+  <span></span><span></span>
+</div>
+
+<header>
+
+<h1>Happy Birthday<br>Jazzmin! 🎂</h1>
+
+<p class="subtitle">so grateful for you ✨</p>
+
+<div class="header-flowers">
+🌸 🌼 🌷 🌸 🌼
+</div>
+
+</header>
+
+<div class="typewriter">
+you make life brighter every day 💛
+</div>
+
+<div class="feed">
+
+<!-- POLAROID -->
+
+<div class="polaroid-wrap">
+<div class="polaroid">
+
+<div class="front">
+
+<div class="tape"></div>
+
+<div class="photo-area">
+
+<div class="photo-placeholder">
+<span>📸</span>
+<p>add your photo here</p>
+</div>
+
+</div>
+
+<div class="caption">
+<span>remember this day?? 😭💛</span>
+</div>
+
+</div>
+
+<div class="back">
+you’re literally one of the best people ever 🌸
+</div>
+
+</div>
+</div>
+
+<div class="flower-divider">
+🌼 ✿ 🌼 ✿ 🌼
+</div>
+
+<div class="polaroid-wrap">
+<div class="polaroid">
+
+<div class="front">
+
+<div class="tape"></div>
+
+<div class="photo-area">
+
+<div class="photo-placeholder">
+<span>📸</span>
+<p>add your photo here</p>
+</div>
+
+</div>
+
+<div class="caption">
+<span>my favorite memories 🥹</span>
+</div>
+
+</div>
+
+<div class="back">
+thank you for always being amazing ✨
+</div>
+
+</div>
+</div>
+
+<div class="flower-divider">
+🌸 🌷 🌸 🌷 🌸
+</div>
+
+<div class="polaroid-wrap">
+<div class="polaroid">
+
+<div class="front">
+
+<div class="tape"></div>
+
+<div class="photo-area">
+
+<div class="photo-placeholder">
+<span>📸</span>
+<p>add your photo here</p>
+</div>
+
+</div>
+
+<div class="caption">
+<span>we were SO chaotic 😭</span>
+</div>
+
+</div>
+
+<div class="back">
+more adventures together please 💫
+</div>
+
+</div>
+</div>
+
+</div>
+
+<button class="surprise-btn" onclick="openPopup()">
+open surprise 🎁
+</button>
+
+<div class="popup" id="popup">
+
+<div class="popup-content">
+
+you deserve every beautiful thing in life 💖🌸✨
+
+<br><br>
+
+<button class="surprise-btn" onclick="closePopup()">
+close
+</button>
+
+</div>
+
+</div>
+
+<footer>
+
+<p>
+love you to pieces,<br>
+Jazzmin!! 🎂🌷
+</p>
+
+<div class="footer-flowers">
+🌸 🌼 🌷 🌸 🌼
+</div>
+
+</footer>
+
+<!-- MUSIC -->
+
+<audio autoplay loop>
+<source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_c8c8e8f7f4.mp3?filename=happy-birthday-to-you-piano-version-13976.mp3" type="audio/mp3">
+</audio>
+
+<script>
+
+/* CONFETTI */
+
+window.onload = () => {
+
+confetti({
+  particleCount:200,
+  spread:120,
+  origin:{ y:0.6 }
+});
+
+};
+
+/* PETALS */
+
+const petals = ["🌸","🌼","🌷","✨"];
+
+setInterval(() => {
+
+const petal = document.createElement("div");
+
+petal.innerHTML = petals[Math.floor(Math.random()*petals.length)];
+
+petal.style.position = "fixed";
+petal.style.left = Math.random() * window.innerWidth + "px";
+petal.style.top = "-30px";
+petal.style.fontSize = (20 + Math.random()*20) + "px";
+petal.style.pointerEvents = "none";
+petal.style.zIndex = "9999";
+petal.style.transition = "transform 8s linear, opacity 8s linear";
+
+document.body.appendChild(petal);
+
+setTimeout(() => {
+
+petal.style.transform =
+`translateY(${window.innerHeight + 100}px)
+rotate(360deg)`;
+
+petal.style.opacity = "0";
+
+},50);
+
+setTimeout(() => {
+
+petal.remove();
+
+},8000);
+
+},400);
+
+/* SPARKLES */
+
+document.addEventListener("click",(e)=>{
+
+const sparkle = document.createElement("div");
+
+sparkle.innerHTML = "✨";
+
+sparkle.style.position = "fixed";
+sparkle.style.left = e.clientX + "px";
+sparkle.style.top = e.clientY + "px";
+sparkle.style.fontSize = "24px";
+sparkle.style.pointerEvents = "none";
+sparkle.style.transition = "all 1s ease";
+sparkle.style.zIndex = "9999";
+
+document.body.appendChild(sparkle);
+
+setTimeout(()=>{
+
+sparkle.style.transform =
+"translateY(-40px) scale(2)";
+
+sparkle.style.opacity = "0";
+
+},10);
+
+setTimeout(()=>{
+
+sparkle.remove();
+
+},1000);
+
+});
+
+/* POPUP */
+
+function openPopup(){
+
+document.getElementById("popup").style.display = "flex";
+
+confetti({
+  particleCount:150,
+  spread:100
+});
+
+}
+
+function closePopup(){
+
+document.getElementById("popup").style.display = "none";
+
+}
+
+/* RANDOM COMPLIMENTS */
+
+const compliments = [
+
+"you are sunshine ☀️",
+"you’re adorable 🌸",
+"you make everything better 💛",
+"main character energy ✨",
+"too iconic honestly 😭",
+"you deserve the world 🌎"
+
+];
+
+setInterval(()=>{
+
+const msg = document.createElement("div");
+
+msg.innerHTML =
+compliments[Math.floor(Math.random()*compliments.length)];
+
+msg.style.position = "fixed";
+msg.style.bottom = "20px";
+msg.style.left = "50%";
+msg.style.transform = "translateX(-50%)";
+msg.style.background = "white";
+msg.style.padding = "12px 20px";
+msg.style.borderRadius = "999px";
+msg.style.boxShadow = "0 6px 20px rgba(0,0,0,0.15)";
+msg.style.zIndex = "9999";
+msg.style.fontSize = "1.2rem";
+msg.style.color = "#8b4513";
+msg.style.animation = "popup 0.5s ease";
+
+document.body.appendChild(msg);
+
+setTimeout(()=>{
+
+msg.remove();
+
+},3000);
+
+},10000);
+
+</script>
+
+</body>
+</html>
+```
